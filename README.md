@@ -26,6 +26,8 @@
   - Set the user's update router;
   - Set the product's router on controllers;
   - Set the order's router on controllers;
+  - Set page UI with React and TailwindCss;
+  - Set Product Detail UI;
 
 
 
