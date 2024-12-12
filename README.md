@@ -1,17 +1,19 @@
-# Project Schema 
+# Lojinha-Livre
+# Project E-Commerce Schema :
 
 - The project objetive is to build an E-Commerce Application with the following features: 
   - User login and encrypted password; 
     - Google Authentication;
+    - Token Authentication;
   - MongoDB database;
   - Setup Payment;
   - User can Buy items and register items to Sell;
   - User can filter the list of items; 
 
-# Steps:
+# Steps Done:
 
   - Build a frontend folder with Vite's React App;
-  - Build an Express's server;
+  - Build an Express's server in api folder;
   - Build a MongoDB Cluster;
   - Build the connection with mongoose to MongoDB; 
   - Build a dummy data receiver in 'data' folder;
@@ -28,16 +30,68 @@
   - Set the order's router on controllers;
   - Set page UI with React and TailwindCss;
   - Set Product Detail UI;
+  - Build Redux Main / ProductList page;
+
+# To-Do : Client
+
+  - Build Main ProductList Page; (Partial)
+    - Set Products limit per Page; 
+    - Set Pages;
+    - Set Filters;
+
+  - Build Product Detail Page;
+  - Build Cart Page;
+  - Build Payment Page;
+    - Implement Payment Logic;
+  - Build User Login Page;
+  - Build User Register Page;
+  - Build User Page;
+    - Edit User;
+    - View Cart (Redirect Cart Page);
+    - Wishlist;
+    - Add Product to sell;
+    - Edit Product to sell;
+    - Delete Product to sell;
+  - Build Contact-me Page;
+
+# To-Do : Server 
+
+  - Rearrange models of products; (DONE)
+    - More images support; (DONE)
+    - Type: (DONE)
+      - Clothes;
+      - Eletronics;
+      - Books; 
+      - ...
+    - Options to variables(Size, type, options); (DONE)
+    - Number of Reviews; (DONE)
+  - Rearrange models of user; 
+    - WishList;
+    - Product to sell attatched;
+    - Product buy history;
+      - Add review;
+    - Reviews;
+      - Edit review;
+      - Delete review;
+  - Build Model of reviews; (DONE)
+    - Comments; (DONE)
+    - User_id Comment;  (DONE)
+    - Product_id Comment; (DONE)
+  - Build review Controller 
 
 
+# Tecnologies used
 
-
-
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  - React;
+  - TailwindCSS;
+  - NodeJs;
+  - ExpressJs;
+  - Mongoose (MongoDB);
+  - jsonwebtoken;
+  - Cors;
+  - Axios;
+  - Redux;
+  - Redux-persist;
+  - Redux-thunk;
+  - Excalidraw
+  - Trello (Kanban)

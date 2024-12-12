@@ -1,11 +1,13 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const cors = require('cors')
 const Products = require('./data/productsData');
-const controllerDbSeeder = require('./controllers/dbSeeder');
-const controllerUser = require('./controllers/userController')
-const controllerProduct = require('./controllers/productsController');
-const controllerOrder = require('./controllers/orderController');
+const dbSeederController = require('./controllers/dbSeederController');
+const usersController = require('./controllers/usersController')
+const productsController = require('./controllers/productsController');
+const ordersController = require('./controllers/ordersController');
+const reviewsController = require('./controllers/reviewsController');
 
 dotenv.config()
 
@@ -13,6 +15,8 @@ const app = express();
 const PORT = process.env.PORT;
 
 app.use(express.json()); // defining main data receiving
+
+app.use(cors());
 
 mongoose.connect(process.env.MONGODB_CONNECT)
   .then(() => console.log('db connected'))
@@ -24,27 +28,37 @@ mongoose.connect(process.env.MONGODB_CONNECT)
 //Seeder controller
 // localhost:3000/api/seed/users - POST
 // localhost:3000/api/seed/products - POST
-app.use('/api/seed', controllerDbSeeder);
+// localhost:3000/api/seed/reviews - POST
+app.use('/api/seed', dbSeederController);
 
 
 //User controller
 // localhost:3000/api/users/login - POST
 // localhost:3000/api/users/register - POST
 // localhost:3000/api/users/profile - GET
-app.use('/api/users', controllerUser);
+// localhost:3000/api/users/profile - PUT
+// localhost:3000/api/users/addwishlist/:id - PUT
+// localhost:3000/api/users/deletewishlist/:id - PUT
+app.use('/api/users', usersController);
 
 
 //Products controller
 // localhost:3000/api/products/ - GET
 // localhost:3000/api/products/:id - GET
 // localhost:3000/api/users/register - POST
-app.use('/api/products', controllerProduct);
+app.use('/api/products', productsController);
 
 
 //Order controller
 // localhost:3000/api/order/ - POST
 
-app.use('/api/orders', controllerOrder);
+app.use('/api/orders', ordersController);
+
+
+//Reviews controller
+// localhost:3000/api/reviews/:product_id - GET
+// localhost:3000/api/reviews/addreview - POST
+app.use('/api/reviews', reviewsController);
 
 
 

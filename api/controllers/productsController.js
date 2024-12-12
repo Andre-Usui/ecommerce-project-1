@@ -5,6 +5,7 @@ const productModel = require('../models/productModel');
 // fetch all products
 router.get('/', asyncHandler(async (req, res) => {
   const products = await productModel.find({});
+  console.log(req.body)
   //Se o Objeto não for definido, ele irá retornar todos os
   //dados registrados
   res.json(products);
