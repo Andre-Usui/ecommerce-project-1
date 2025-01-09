@@ -20,8 +20,8 @@ const protect = asyncHandler(async (req, res, next) => {
     };
   };
   if (!token) {
-    res.status(401);
-    throw new Error('not authorized for login with token');
+    res.status(401).json({error: 'not authorized for login with token'});
+    next();
   };
 });
 

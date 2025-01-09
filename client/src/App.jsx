@@ -1,19 +1,22 @@
-import { 
-  BrowserRouter as Router, 
-  Routes, 
-  Route, 
-  Navigate 
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate
 } from 'react-router-dom';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
-import ProductsList from './pages/Main/ProductsList';
+import Main from './pages/Main/Main';
+import Login from './pages/Login/Login';
 
 function App() {
   return (
     <>
       <Router>
         <Routes>
-          <Route exact path='/' element={<ProductsList />} />
-          <Route exact path='/detail/' element={<ProductDetail />} />
+          <Route  path='/' element={<Main />} />
+          <Route  path='/detail/:id' element={<ProductDetail />} />
+          <Route  path='/login' element={<Login type="login"/>} />
+          <Route  path='/register' element={<Login type="register"/>} />
         </Routes>
       </Router>
     </>
