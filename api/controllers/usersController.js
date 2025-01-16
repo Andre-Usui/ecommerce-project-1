@@ -2,31 +2,56 @@ const router = require('express').Router();
 const asyncHandler = require('express-async-handler');
 const userModel = require('../models/userModel');
 const productModel = require('../models/productModel');
-const generateToken = require('../tokenGenerate');
+const COOKIE_OPTIONS = require('../util/cookieOptions');
+const generateJwtToken = require('../generateJwtToken');
 const protect = require('../middleware/auth');
+const {
+  invalidCsrfTokenError, 
+  generateToken,
+  validateRequest,
+  doubleCsrfProtection
+} = require('../middleware/csrf');
+
+const csrfErrorHandler = (error, req, res, next) => {
+  if (error == invalidCsrfTokenError) {
+    res.status(403).json({
+      ...error
+    });
+  } else {
+    next();
+  }
+};
 
 // login user route
-router.post('/login', asyncHandler(async (req, res, next) => {
+router.post('/login', 
+  doubleCsrfProtection, 
+  csrfErrorHandler, 
+  asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(req.cookies)
+  console.log(req.headers)
 
   if (!email || !password) {
-    res.status(400).json({ message: 'Email and password are required'});
+    res.status(400).json({ message: 'Email and password are required' });
   };
-
+  console.log(email, password);
   const user = await userModel.findOne({ email }).select('+password');
   if (user && (await user.matchPassword(password))) {
+
+    res.cookie('authToken', generateJwtToken(user._id), COOKIE_OPTIONS);
+
     res.json({
       _id: user.id,
-      name: user.name,
+      // name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id),
+      wishlist: user.wishlist,
+      productBuyed: user.productBuyed,
       createdAt: user.createdAt,
     })
   } else {
-    res.status(401).json({ message: 'Invalid Email or Password'});
+    res.status(401).json({ message: 'Invalid Email or Password' });
   }
-
 }));
 
 
@@ -36,9 +61,9 @@ router.post('/register', asyncHandler(async (req, res) => {
   const existEmail = await userModel.findOne({ email });
   const existName = await userModel.findOne({ name });
   if (existEmail) {
-    res.status(400).json({ message: 'Email already registered'});
+    res.status(400).json({ message: 'Email already registered' });
   } else if (existName) {
-    res.status(400).json({ message: 'User name already exist'});
+    res.status(400).json({ message: 'User name already exist' });
   } else {
     var user = await userModel.create({
       name,
@@ -56,15 +81,39 @@ router.post('/register', asyncHandler(async (req, res) => {
       createdAt: user.createdAt,
     })
   } else {
-    res.status(400).json({ message: 'Invalid User data'});
+    res.status(400).json({ message: 'Invalid User data' });
   }
 }));
 
 
 // profile data
 //    using protect middleware token
+router.get('/profile', 
+  protect, 
+  doubleCsrfProtection,
+  csrfErrorHandler, 
+  asyncHandler(async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user._id);
+    if (user) {
+      res.status(201).json({
+        _id: user._id,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        createdAt: user.createdAt,
+      })
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (err) {
+    res.status(404).json({ message: 'User not found' });
+  }
+}));
+
+/* // profile data
+//    using protect middleware token
 router.get('/profile', protect, asyncHandler(async (req, res) => {
-  const user = await userModel.findById(req.user._id);
+  const user = await userModel.findById(req.header.token);
   if (user) {
     res.status(201).json({
       _id: user._id,
@@ -77,12 +126,17 @@ router.get('/profile', protect, asyncHandler(async (req, res) => {
   } else {
     res.status(404).json({ message: 'User not found'});
   }
-}));
+})); */
+
 
 
 //user profile update
 
-router.put('/profile', protect, asyncHandler(async (req, res) => {
+router.put('/profile', 
+  protect, 
+  doubleCsrfProtection,
+  csrfErrorHandler, 
+  asyncHandler(async (req, res) => {
   const user = await userModel.findById(req.user._id);
   if (user) {
     user.name = req.body.name || user.name;
@@ -97,16 +151,33 @@ router.put('/profile', protect, asyncHandler(async (req, res) => {
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
       createdAt: updatedUser.createdAt,
-      token: generateToken(updatedUser._id)
     });
   } else {
-    res.status(404).json({ message: 'User not found'});
+    res.status(404).json({ message: 'User not found' });
   }
 }));
 
+
+//User logout
+
+router.post('/logout', 
+  protect, 
+  doubleCsrfProtection,
+  csrfErrorHandler, 
+  asyncHandler(async(req, res) => {
+  res.clearCookie('authToken', COOKIE_OPTIONS); // Ensure the same options are used to clear the cookie
+
+  res.redirect(200, '/').json({ message: 'Logged out successfully' });
+}));
+
+
 //Adding a product to the wishlist
 
-router.put('/addwishlist/:id', protect, asyncHandler(async (req, res) => {
+router.put('/addwishlist/:id', 
+  protect, 
+  doubleCsrfProtection,
+  csrfErrorHandler,
+  asyncHandler(async (req, res) => {
   const user = await userModel.findById(req.user._id);
   if (!user) {
     res.status(404).json({ message: 'User not found, please log in again' });
@@ -121,7 +192,7 @@ router.put('/addwishlist/:id', protect, asyncHandler(async (req, res) => {
 
   try {
     await user.addWishlist(req.params.id);
-    await user.save(); 
+    await user.save();
     console.log("product added: ", product)
     res.status(201).json({ message: 'Product added to wishlist successfully' });
   } catch (error) {
@@ -129,9 +200,14 @@ router.put('/addwishlist/:id', protect, asyncHandler(async (req, res) => {
   }
 }));
 
+
 //Deleting a product to the wishlist
 
-router.put('/deletewishlist/:id', protect, asyncHandler(async (req, res) => {
+router.put('/deletewishlist/:id', 
+  protect, 
+  doubleCsrfProtection,
+  csrfErrorHandler,
+  asyncHandler(async (req, res) => {
   const user = await userModel.findById(req.user._id);
   if (!user) {
     res.status(404).json({ message: 'User not found, please log in again' });
@@ -146,7 +222,63 @@ router.put('/deletewishlist/:id', protect, asyncHandler(async (req, res) => {
 
   try {
     await user.deleteWishlist(req.params.id);
-    await user.save(); 
+    await user.save();
+    res.status(201).json({ message: 'Product deleted of the wishlist successfully' });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}));
+
+router.put('/addcart/:id', 
+  protect, 
+  doubleCsrfProtection,
+  csrfErrorHandler,
+  asyncHandler(async (req, res) => {
+  const user = await userModel.findById(req.user._id);
+  if (!user) {
+    res.status(404).json({ message: 'User not found, please log in again' });
+    return;
+  }
+
+  const product = await productModel.findById(req.params.id);
+  if (!product) {
+    res.status(404).json({ message: 'Product not found' });
+    return;
+  }
+
+  try {
+    await user.addCart(req.params.id);
+    await user.save();
+    console.log("product added: ", product)
+    res.status(201).json({ message: 'Product added to wishlist successfully' });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}));
+
+
+//Deleting a product to the wishlist
+
+router.put('/deletecart/:id', 
+  protect, 
+  doubleCsrfProtection,
+  csrfErrorHandler,
+  asyncHandler(async (req, res) => {
+  const user = await userModel.findById(req.user._id);
+  if (!user) {
+    res.status(404).json({ message: 'User not found, please log in again' });
+    return;
+  }
+
+  const product = await productModel.findById(req.params.id);
+  if (!product) {
+    res.status(404).json({ message: 'Product not found' });
+    return;
+  }
+
+  try {
+    await user.deleteCart(req.params.id);
+    await user.save();
     res.status(201).json({ message: 'Product deleted of the wishlist successfully' });
   } catch (error) {
     res.status(400).json({ message: error.message });

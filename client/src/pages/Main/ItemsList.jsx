@@ -31,7 +31,8 @@ export default function ItemsList() {
             antialiased
             text-slate-950
             bg-white
-            rounded-sm"
+            rounded-sm
+            border-b-4 border-b-slate-500/25"
             > Veja alguns de nossos produtos ❤️
             </h1>
           </div>

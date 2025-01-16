@@ -4,7 +4,11 @@ import CarouselWrapper from './CarouselWrapper';
 import ItemsList from './ItemsList';
 import TopSalesWrapper from '../../components/topSales/TopSalesWrapper';
 
+
 export default function Main() {
+
+
+
   return (
     <>
       <Layout>

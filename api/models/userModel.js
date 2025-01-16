@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true, select: false },
     isAdmin: { type: Boolean, required: true, default: false },
     wishlist: { type: [mongoose.Schema.Types.ObjectId], ref: 'Product' },
+    cart: { type: [mongoose.Schema.Types.ObjectId], ref: 'Product' },
     productBuyed: { type: [mongoose.Schema.Types.ObjectId], ref: 'Product' }
   },
   { timestamps: true }
@@ -53,6 +54,27 @@ userSchema.methods.deleteWishlist = async function (product_id) {
   const index = this.wishlist.findIndex(item => item.toString() === product_id.toString());
   if (index !== -1) {
     this.wishlist.splice(index, 1);
+  } else {
+    throw new Error('Product does not exist in wishlist');
+  }
+};
+
+// Adding product in Cart
+userSchema.methods.addCart = async function (product_id) {
+  const checkingDoubles = this.cart.find(item => item.toString() === product_id.toString());
+  if (!checkingDoubles) {
+    this.wishlist.push(product_id);
+  } else {
+    throw new Error('Product already exist in wishlist');
+  }
+};
+
+// Deletinging product in Cart
+
+userSchema.methods.deleteCart = async function (product_id) {
+  const index = this.cart.findIndex(item => item.toString() === product_id.toString());
+  if (index !== -1) {
+    this.cart.splice(index, 1);
   } else {
     throw new Error('Product does not exist in wishlist');
   }

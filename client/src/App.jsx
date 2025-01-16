@@ -7,6 +7,7 @@ import {
 import ProductDetail from './pages/ProductDetail/ProductDetail';
 import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
+import UserSettings from './pages/UserSettings/UserSettings';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route  path='/detail/:id' element={<ProductDetail />} />
           <Route  path='/login' element={<Login type="login"/>} />
           <Route  path='/register' element={<Login type="register"/>} />
+          <Route  path='/profile' element={<UserSettings />} />
         </Routes>
       </Router>
     </>

@@ -12,8 +12,8 @@ export default function ItemsCard(props) {
   }
   return (
     <>
-      <div className="w-full h-full">
-        <div className="py-3 px-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 bg-white rounded-lg">
+      <div className="w-full h-full border-b-4 border-b-slate-500/25">
+        <div className="py-3 px-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 bg-white rounded-t-lg">
           <div className="group relative">
             {props.impulse === true && <img src="./badge-logo.svg"
               className="

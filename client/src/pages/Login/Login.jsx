@@ -1,12 +1,26 @@
+import { useState } from 'react';
 import Layout from '../../components/Layout/Layout'
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
+import { userLoginAction } from '../../Redux/actions/userAction';
+import { useDispatch, useSelector } from 'react-redux';
+
+
 
 export default function Login({ type }) {
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
+
+  const { loadingUser, message } = useSelector((state) => state.userData);
+
+
   const wrapper = "mx-6 place-items-center w-full"
-  function handle(){
+  function handle(e){
+    e.preventDefault();
     if(type==="login"){
-      console.log("login")
+      dispatch(userLoginAction({email, password}))
     }else{
       console.log("register")
     }
@@ -32,13 +46,13 @@ export default function Login({ type }) {
                 <div className="mb-2 block">
                   <Label htmlFor="email1" value="Seu email" />
                 </div>
-                <TextInput id="email1" type="email" placeholder="name@lojinhalivre.com" required />
+                <TextInput id="email1" type="email" value={email} onChange={(e) => setEmail(e.target.value)}placeholder="name@lojinhalivre.com" required />
               </div>
               <div >
                 <div className="mb-2 block">
                   <Label htmlFor="password1" value="Sua senha" />
                 </div>
-                <TextInput id="password1" type="password" required />
+                <TextInput id="password1" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
               </div>
               {type === "register" ?
                 <div >

@@ -1,16 +1,91 @@
 # Lojinha-Livre
-# Project E-Commerce Schema :
 
-- The project objetive is to build an E-Commerce Application with the following features: 
+## Project E-Commerce Schema :
+
+### Description
+
+- The project objetive is to build an E-Commerce Application, similar to Shopee, with the following features: 
   - User login and encrypted password; 
-    - Google Authentication;
     - Token Authentication;
+  - CSRF protection
   - MongoDB database;
   - Setup Payment;
-  - User can Buy items and register items to Sell;
-  - User can filter the list of items; 
+  - User can Buy items and register items to sell;
+  - User can filter a custom list of items; 
 
-# Steps Done:
+
+## Release 1.0.1 Development
+
+  - Implemented security logic for handling jwt and csrf tokens, using cookies instead of headers in Request. Now the app is protected from CSRF atacks and there is more security since the Cookie doesnt handle JavaScript logic as Headers. 
+    - Used `cookie-parser` and `csrf-csrf`.
+  - Implemented Redux Persist to handle Users Data.
+  - Builded Login and Register Page's.
+  - Updated Navbar component to respond dynamically when user is logged.  
+
+  ### To-do:
+
+  - Build Perfil, Wishlist and Cart page's
+  - Build Categories Products Page's
+    - Build filter Components
+
+
+### Technologies
+
+**API**
+
+  - NodeJs
+  - ExpressJs
+  - MongoDB
+  - Mongoose
+  - cors
+  - cookie-parser
+  - csrf-csrf
+  - JWT token
+
+**Client**
+
+  - React
+  - Axios
+  - Redux Tool Kit
+  - TailwindCss
+  - Flowbite
+
+**Organization**
+
+  - Excalidraw
+  - Trello (Kanban)
+
+
+## To-Do : Client
+
+  - Build Main ProductList Page; (Partial)
+    - Set Products limit per Page; 
+    - Set Pages;
+    - Set Filters;
+
+  - Build Product Detail Page;
+  - Build Cart Page;
+  - Build Payment Page;
+    - Implement Payment Logic;
+  - Build User Page;
+    - Edit User;
+    - View Cart (Redirect Cart Page);
+    - Wishlist;
+    - Add Product to sell;
+    - Edit Product to sell;
+    - Delete Product to sell;
+  - Build Contact-me Page;
+
+## To-Do : Server 
+
+    - Reviews;
+      - Add review;
+      - Edit review;
+      - Delete review;
+  - Build review Controller 
+
+
+### Steps Done:
 
   - Build a frontend folder with Vite's React App;
   - Build an Express's server in api folder;
@@ -31,67 +106,24 @@
   - Set page UI with React and TailwindCss;
   - Set Product Detail UI;
   - Build Redux Main / ProductList page;
-
-# To-Do : Client
-
-  - Build Main ProductList Page; (Partial)
-    - Set Products limit per Page; 
-    - Set Pages;
-    - Set Filters;
-
-  - Build Product Detail Page;
-  - Build Cart Page;
-  - Build Payment Page;
-    - Implement Payment Logic;
   - Build User Login Page;
   - Build User Register Page;
-  - Build User Page;
-    - Edit User;
-    - View Cart (Redirect Cart Page);
-    - Wishlist;
-    - Add Product to sell;
-    - Edit Product to sell;
-    - Delete Product to sell;
-  - Build Contact-me Page;
-
-# To-Do : Server 
-
-  - Rearrange models of products; (DONE)
-    - More images support; (DONE)
-    - Type: (DONE)
-      - Clothes;
-      - Eletronics;
-      - Books; 
-      - ...
-    - Options to variables(Size, type, options); (DONE)
-    - Number of Reviews; (DONE)
-  - Rearrange models of user; 
-    - WishList;
-    - Product to sell attatched;
-    - Product buy history;
-      - Add review;
-    - Reviews;
-      - Edit review;
-      - Delete review;
-  - Build Model of reviews; (DONE)
-    - Comments; (DONE)
-    - User_id Comment;  (DONE)
-    - Product_id Comment; (DONE)
-  - Build review Controller 
+  - Rearrange models of products;
+  - More images support;
+  - Type:
+    - Clothes;
+    - Eletronics;
+    - Books; 
+    - ...
+  - Options to variables(Size, type, options);
+  - Number of Reviews;
+- Rearrange models of user; 
+  - WishList;
+  - Product to sell attatched;
+  - Product buy history;
+- Build Model of reviews;
+  - Comments;
+  - User_id Comment; 
+  - Product_id Comment;
 
 
-# Tecnologies used
-
-  - React;
-  - TailwindCSS;
-  - NodeJs;
-  - ExpressJs;
-  - Mongoose (MongoDB);
-  - jsonwebtoken;
-  - Cors;
-  - Axios;
-  - Redux;
-  - Redux-persist;
-  - Redux-thunk;
-  - Excalidraw
-  - Trello (Kanban)

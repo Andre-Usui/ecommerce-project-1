@@ -6,7 +6,7 @@ import { productsCarouselAction } from "../../Redux/actions/productAction.js";
 
 
 export default function CarouselItemImgProduct({ position, text, textSmall }) {
-  const wrapper = 'size-full flex flex-row justify-center items-stretch bg-gradient-to-tr from-emerald-950 from-5% via-emerald-900 via-50% to-emerald-950 border-none lg:border lg:border-slate-300'
+  const wrapper = 'size-full flex flex-row justify-center items-stretch bg-gradient-to-tr from-emerald-950 from-5% via-emerald-900 via-50% to-emerald-950 border-none md:border md:border-slate-300'
   const wrapperItem = 'pr-8 md:pr-12 lg:pr-12 flex flex-col grow justify-center items-end gap-0';
   const h1Item = 'font-sans pt-2 lg:pt-0 pb-3 md:pb-4 lg:pb-8 text-2xl md:text-4xl lg:text-7xl antialiased font-semibold text-end text-orange-500'
   const h1ItemSmall = 'font-sans pt-1 lg:pt-0 pb-2 lg:pb-4 text-lg md:text-2xl lg:text-4xl antialiased text-balance font-semibold text-end text-orange-500'

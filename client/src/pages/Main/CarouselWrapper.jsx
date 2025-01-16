@@ -27,7 +27,7 @@ const customCarousel = {
 
 };
 
-const wrapperItem = 'h-20 md:size-auto px-2 py-2 flex flex-col grow justify-center items-stretch col-span-3 md:col-span-1 bg-orange-500 border-t-2 border-t-slate-50 lg:border lg:border-slate-300';
+const wrapperItem = 'h-20 md:size-auto px-2 py-2 flex flex-col grow justify-center items-stretch col-span-3 md:col-span-1 bg-orange-500 border-t-2 border-t-slate-50 md:border md:border-slate-300';
 const innerWrapperItem = 'font-sans text-xs sm:text-sm lg:text-xl antialiased font-semibold text-center align-middle text-slate-50'
 
 export default function CarouselWrapper() {

@@ -1,5 +1,5 @@
 export default function CarouselItemImgLeft({img, text, alt}) {
-  const wrapper = 'size-full flex flex-row justify-center items-center bg-slate-50 border-none lg:border lg:border-slate-300'
+  const wrapper = 'size-full flex flex-row justify-center items-center bg-slate-50 border-none md:border md:border-slate-300'
   const wrapperItem = 'pr-6 md:pr-12 lg:pr-12 flex flex-col grow justify-center items-stretch';
   const h2Item = 'font-sans text-sm sm:text-lg lg:text-xl antialiased font-semibold text-end align-middle text-orange-500'
 

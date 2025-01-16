@@ -2,11 +2,19 @@ const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cors = require('cors')
+const cookieParser = require('cookie-parser');
+const {
+  invalidCsrfTokenError, 
+  generateToken,
+  validateRequest,
+  doubleCsrfProtection
+} = require('./middleware/csrf');
 const dbSeederController = require('./controllers/dbSeederController');
 const usersController = require('./controllers/usersController')
 const productsController = require('./controllers/productsController');
 const ordersController = require('./controllers/ordersController');
 const reviewsController = require('./controllers/reviewsController');
+const csrfController = require('./controllers/csrfController');
 
 dotenv.config();
 
@@ -15,13 +23,36 @@ const PORT = process.env.PORT;
 
 app.use(express.json()); // defining main data receiving
 
-app.use(cors());
-
 mongoose.connect(process.env.MONGODB_CONNECT)
   .then(() => console.log('db connected'))
   .then((err) => {
     if (err) console.log(err)
 });
+
+const corsOptions = {
+  origin: 'http://localhost:5173', // Frontend domain
+  credentials: true,              // Allow cookies to be sent
+};
+
+app.use(cors(corsOptions));
+app.use(cookieParser());
+
+// Route to fetch the CSRF token
+
+const csrfErrorHandler = (error, req, res, next) => {
+  if (error == invalidCsrfTokenError) {
+    res.status(403).json({
+      error
+    });
+  } else {
+    next();
+  }
+};
+
+app.use(doubleCsrfProtection, csrfErrorHandler);
+app.use('/api/csrf', csrfController);
+
+
 
 
 //Seeder controller
