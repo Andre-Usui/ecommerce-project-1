@@ -3,17 +3,22 @@ import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogoutAction } from "../../Redux/actions/userAction.js";
 
-
 export default function Navbar() {
 
   const [isNavExpanded, setIsNavExpanded] = useState(false);
+  const dispatch = useDispatch();
 
   const toggleNavbar = () => {
     setIsNavExpanded((prev) => !prev);
   };
 
+  const handleLogout = (e) => {
+    e.preventDefault;
+    console.log('logout was called');
+    dispatch(userLogoutAction())
+  }
 
-  const dispatch = useDispatch();
+
 
   const { userData, loadingUser, userIsLogged, messageUser } = useSelector((state) => state.userData);
 
@@ -85,9 +90,9 @@ export default function Navbar() {
                   </li>
                   <li>
                     <a
-                      href={CLIENT_URL}
+                      onClick={handleLogout}
+                      href='#'
                       className={itemNavbarClass}
-                      onClick={userLogoutAction}
                       >
                       Logout
                     </a>

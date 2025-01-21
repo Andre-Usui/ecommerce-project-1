@@ -5,6 +5,7 @@ const userModel = require('../models/userModel');
 const protect = asyncHandler(async (req, res, next) => {
 
   let token = req.cookies.authToken;
+  console.log('protect is working');
 
   if (!token) {
     res.status(401).json({ message: 'Unauthorized' });

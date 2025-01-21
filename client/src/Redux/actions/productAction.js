@@ -7,7 +7,7 @@ export const productsListAction = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${BASE_URL}/api/products/num/8`);
-      console.log(data);
+
       dispatch(
         productsActions.renderProductsList({
           products: data || [],
@@ -26,7 +26,6 @@ export const productsCollectionAction = ({query}) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${BASE_URL}/api/products/collections?${query}`);
-      console.log(data);
       dispatch(
         productsActions.renderProductsList({
           products: data || [],
@@ -45,7 +44,6 @@ export const productsCarouselAction = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${BASE_URL}/api/products/group?random=true&limit=2`);
-      console.log(data);
       dispatch(
         productsActions.renderProductsCarousel({
           productsCarousel: data || [],
@@ -64,7 +62,6 @@ export const productsTopSalesAction = ({category, limit}) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${BASE_URL}/api/products/group?${category?`category=${category}` : "random=true"}${limit?`&limit=${limit}`:""}`);
-      console.log(data);
       dispatch(
         productsActions.renderProductsTopSales({
           productsTopSales: data || [],
@@ -83,7 +80,6 @@ export const productDetailAction = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${BASE_URL}/api/products/${id}`);
-      console.log(data);
       dispatch(
         productsActions.renderProductDetail({
           productDetail: data || {},

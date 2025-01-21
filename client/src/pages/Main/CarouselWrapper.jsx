@@ -6,7 +6,6 @@ import CarouselItemImgRight from "./CarouselItemImgRight";
 import CarouselItemProduct from "./CarouselItemProduct.jsx";
 
 
-
 const customCarousel = {
   root: {
     base: "relative h-full w-full",
@@ -31,8 +30,6 @@ const wrapperItem = 'h-20 md:size-auto px-2 py-2 flex flex-col grow justify-cent
 const innerWrapperItem = 'font-sans text-xs sm:text-sm lg:text-xl antialiased font-semibold text-center align-middle text-slate-50'
 
 export default function CarouselWrapper() {
-
-
 
   return (
     <div className="

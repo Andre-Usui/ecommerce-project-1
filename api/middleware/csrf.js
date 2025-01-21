@@ -12,8 +12,9 @@ module.exports = {
   getSecret: () => process.env.CSRF_SECRET,
   cookieName: "csrfToken",
   cookieOptions: {
-    sameSite: 'strict',
-    secure: false,
+    sameSite: 'lax',
+    secure: true,
+    //secure: false,
     maxAge: 1000 * 60 * 60 * 24
   }
 });

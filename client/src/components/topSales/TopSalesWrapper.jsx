@@ -10,7 +10,6 @@ export default function TopSalesWrapper({ category, limit }) {
 
 
   useEffect(() => {
-    console.log('useEffect was called')
     dispatch(productsTopSalesAction({ category, limit }));
   }, [dispatch, category, limit]);
 
@@ -26,7 +25,7 @@ export default function TopSalesWrapper({ category, limit }) {
       text-slate-950">
         ⚡ Nossos produtos mais Tops ! ⚡
       </h1>
-      {loadingTopSales ? (
+      {loadingTopSales==='true' ? (
         <h1>loading</h1>
       ) : (
         <section className="text-gray-600 body-font w-full px-auto lg:px-8 overflow-x-scroll lg:overflow-hidden">

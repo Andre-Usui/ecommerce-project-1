@@ -1,8 +1,10 @@
 # Lojinha-Livre
+## A project E-Commerce Schema
 
-## Project E-Commerce Schema :
+You can see the project at 
+https://lojinhalivre.vercel.app/
 
-### Description
+## Description
 
 - The project objetive is to build an E-Commerce Application, similar to Shopee, with the following features: 
   - User login and encrypted password; 
@@ -12,6 +14,11 @@
   - Setup Payment;
   - User can Buy items and register items to sell;
   - User can filter a custom list of items; 
+
+
+## Release 1.0.2 Development
+  - Deploy Client and API at Vercel Host.
+  - Updated constants of URL for deployment.
 
 
 ## Release 1.0.1 Development
@@ -78,10 +85,10 @@
 
 ## To-Do : Server 
 
-    - Reviews;
-      - Add review;
-      - Edit review;
-      - Delete review;
+  - Reviews;
+    - Add review;
+    - Edit review;
+    - Delete review;
   - Build review Controller 
 
 

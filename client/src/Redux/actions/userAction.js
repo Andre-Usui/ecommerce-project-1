@@ -3,15 +3,18 @@ import axios from "axios";
 import { BASE_URL } from "../constants/BASE_URL";
 import { userActions } from "../reducers/userReducer"
 import { csrfHandler } from "../csrfHandler";
+import { persistor } from '../store';
+import { PURGE } from "redux-persist";
+
 
 
 export const userLoginAction = ({ email, password }) => {
-  
+
   return async (dispatch) => {
     //const csrfString = JSON.stringify(csrfToken)
     try {
 
-     const csrf = await csrfHandler()
+      const csrf = await csrfHandler()
 
       const { data } = await axios.post(
         `${BASE_URL}/api/users/login`,
@@ -42,7 +45,21 @@ export const userLoginAction = ({ email, password }) => {
 export const userGetAction = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${BASE_URL}/api/users/profile/`);
+      const csrf = await csrfHandler()
+
+     
+
+
+      const { data } = await axios.get(`${BASE_URL}/api/users/profile`, {
+        withCredentials: true,
+        headers:
+        {
+          "Content-Type": "application/json",
+          "x-csrf-token": csrf,
+          "X-XSRF-TOKEN": csrf
+        }
+      });
+    
       dispatch(
         userActions.renderUserGet({
           userData: data || {}
@@ -61,6 +78,20 @@ export const userGetAction = () => {
 export const userLogoutAction = () => {
   return async (dispatch) => {
     try {
+      const csrf = await csrfHandler();
+      persistor.purge();
+
+      console.log('csrf was catched')
+      await axios.get(`${BASE_URL}/api/users/logout`, {
+        withCredentials: true,
+        headers:
+        {
+          "Content-Type": "application/json",
+          "x-csrf-token": csrf,
+          "X-XSRF-TOKEN": csrf
+        }
+      });
+      console.log('action logout was called')
       dispatch(
         userActions.renderUserLogout()
       )

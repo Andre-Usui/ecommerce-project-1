@@ -6,7 +6,7 @@ const COOKIE_OPTIONS = require('../util/cookieOptions');
 const generateJwtToken = require('../generateJwtToken');
 const protect = require('../middleware/auth');
 const {
-  invalidCsrfTokenError, 
+  invalidCsrfTokenError,
   generateToken,
   validateRequest,
   doubleCsrfProtection
@@ -23,36 +23,34 @@ const csrfErrorHandler = (error, req, res, next) => {
 };
 
 // login user route
-router.post('/login', 
-  doubleCsrfProtection, 
-  csrfErrorHandler, 
+router.post('/login',
+  doubleCsrfProtection,
+  csrfErrorHandler,
   asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
-  console.log(req.cookies)
-  console.log(req.headers)
+    const { email, password } = req.body;
 
-  if (!email || !password) {
-    res.status(400).json({ message: 'Email and password are required' });
-  };
-  console.log(email, password);
-  const user = await userModel.findOne({ email }).select('+password');
-  if (user && (await user.matchPassword(password))) {
+    if (!email || !password) {
+      res.status(400).json({ message: 'Email and password are required' });
+    };
+    console.log(email, password);
+    const user = await userModel.findOne({ email }).select('+password');
+    if (user && (await user.matchPassword(password))) {
 
-    res.cookie('authToken', generateJwtToken(user._id), COOKIE_OPTIONS);
+      res.cookie('authToken', generateJwtToken(user._id), COOKIE_OPTIONS);
 
-    res.json({
-      _id: user.id,
-      // name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      wishlist: user.wishlist,
-      productBuyed: user.productBuyed,
-      createdAt: user.createdAt,
-    })
-  } else {
-    res.status(401).json({ message: 'Invalid Email or Password' });
-  }
-}));
+      res.json({
+        _id: user.id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        wishlist: user.wishlist,
+        productBuyed: user.productBuyed,
+        createdAt: user.createdAt,
+      })
+    } else {
+      res.status(401).json({ message: 'Invalid Email or Password' });
+    }
+  }));
 
 
 // register user route
@@ -88,201 +86,192 @@ router.post('/register', asyncHandler(async (req, res) => {
 
 // profile data
 //    using protect middleware token
-router.get('/profile', 
-  protect, 
+router.get('/profile',
+  protect,
   doubleCsrfProtection,
-  csrfErrorHandler, 
+  csrfErrorHandler,
   asyncHandler(async (req, res) => {
-  try {
-    const user = await userModel.findById(req.user._id);
-    if (user) {
-      res.status(201).json({
-        _id: user._id,
-        email: user.email,
-        isAdmin: user.isAdmin,
-        createdAt: user.createdAt,
-      })
-    } else {
+    try {
+      const user = await userModel.findById(req.user._id);
+      if (user) {
+        res.status(201).json({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+          createdAt: user.createdAt,
+        })
+      } else {
+        res.status(404).json({ message: 'User not found' });
+      }
+    } catch (err) {
       res.status(404).json({ message: 'User not found' });
     }
-  } catch (err) {
-    res.status(404).json({ message: 'User not found' });
-  }
-}));
-
-/* // profile data
-//    using protect middleware token
-router.get('/profile', protect, asyncHandler(async (req, res) => {
-  const user = await userModel.findById(req.header.token);
-  if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      createdAt: user.createdAt,
-      token: generateToken(user._id)
-    })
-  } else {
-    res.status(404).json({ message: 'User not found'});
-  }
-})); */
-
+  }));
 
 
 //user profile update
 
-router.put('/profile', 
-  protect, 
+router.put('/profile',
+  protect,
   doubleCsrfProtection,
-  csrfErrorHandler, 
+  csrfErrorHandler,
   asyncHandler(async (req, res) => {
-  const user = await userModel.findById(req.user._id);
-  if (user) {
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    if (req.body.password) {
-      user.password = req.body.password;
+    const user = await userModel.findById(req.user._id);
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+      const updatedUser = await user.save()
+      res.status(201).json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        createdAt: updatedUser.createdAt,
+      });
+    } else {
+      res.status(404).json({ message: 'User not found' });
     }
-    const updatedUser = await user.save()
-    res.status(201).json({
-      _id: updatedUser._id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-      isAdmin: updatedUser.isAdmin,
-      createdAt: updatedUser.createdAt,
-    });
-  } else {
-    res.status(404).json({ message: 'User not found' });
-  }
-}));
+  }));
 
 
 //User logout
 
-router.post('/logout', 
-  protect, 
+router.get('/logout',
+  protect,
   doubleCsrfProtection,
-  csrfErrorHandler, 
-  asyncHandler(async(req, res) => {
-  res.clearCookie('authToken', COOKIE_OPTIONS); // Ensure the same options are used to clear the cookie
-
-  res.redirect(200, '/').json({ message: 'Logged out successfully' });
-}));
+  csrfErrorHandler,
+  asyncHandler(async (req, res) => {
+    try {
+      await console.log("Logout was called: req is ", req)
+      await console.log("Logout was called: req.cookie is ", req.cookies)
+      // Ensure the same options are used to clear the cookie
+      res.clearCookie('authToken', COOKIE_OPTIONS)
+      res.status(200).json({ message: 'Logged out successfully' });
+    } catch (err) {
+      console.log(err)
+      res.status(404).json({ message: 'User not found' });
+    }
+  }));
 
 
 //Adding a product to the wishlist
 
-router.put('/addwishlist/:id', 
-  protect, 
+router.put('/addwishlist/:id',
+  protect,
   doubleCsrfProtection,
   csrfErrorHandler,
   asyncHandler(async (req, res) => {
-  const user = await userModel.findById(req.user._id);
-  if (!user) {
-    res.status(404).json({ message: 'User not found, please log in again' });
-    return;
-  }
+    const user = await userModel.findById(req.user._id);
+    if (!user) {
+      res.status(404).json({ message: 'User not found, please log in again' });
+      return;
+    }
 
-  const product = await productModel.findById(req.params.id);
-  if (!product) {
-    res.status(404).json({ message: 'Product not found' });
-    return;
-  }
+    const product = await productModel.findById(req.params.id);
+    if (!product) {
+      res.status(404).json({ message: 'Product not found' });
+      return;
+    }
 
-  try {
-    await user.addWishlist(req.params.id);
-    await user.save();
-    console.log("product added: ", product)
-    res.status(201).json({ message: 'Product added to wishlist successfully' });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-}));
+    try {
+      await user.addWishlist(req.params.id);
+      await user.save();
+      console.log("product added: ", product)
+      res.status(201).json({ message: 'Product added to wishlist successfully' });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  }));
 
 
 //Deleting a product to the wishlist
 
-router.put('/deletewishlist/:id', 
-  protect, 
+router.put('/deletewishlist/:id',
+  protect,
   doubleCsrfProtection,
   csrfErrorHandler,
   asyncHandler(async (req, res) => {
-  const user = await userModel.findById(req.user._id);
-  if (!user) {
-    res.status(404).json({ message: 'User not found, please log in again' });
-    return;
-  }
+    const user = await userModel.findById(req.user._id);
+    if (!user) {
+      res.status(404).json({ message: 'User not found, please log in again' });
+      return;
+    }
 
-  const product = await productModel.findById(req.params.id);
-  if (!product) {
-    res.status(404).json({ message: 'Product not found' });
-    return;
-  }
+    const product = await productModel.findById(req.params.id);
+    if (!product) {
+      res.status(404).json({ message: 'Product not found' });
+      return;
+    }
 
-  try {
-    await user.deleteWishlist(req.params.id);
-    await user.save();
-    res.status(201).json({ message: 'Product deleted of the wishlist successfully' });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-}));
+    try {
+      await user.deleteWishlist(req.params.id);
+      await user.save();
+      res.status(201).json({ message: 'Product deleted of the wishlist successfully' });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  }));
 
-router.put('/addcart/:id', 
-  protect, 
+//Adding a product to the Cart
+
+router.put('/addcart/:id',
+  protect,
   doubleCsrfProtection,
   csrfErrorHandler,
   asyncHandler(async (req, res) => {
-  const user = await userModel.findById(req.user._id);
-  if (!user) {
-    res.status(404).json({ message: 'User not found, please log in again' });
-    return;
-  }
+    const user = await userModel.findById(req.user._id);
+    if (!user) {
+      res.status(404).json({ message: 'User not found, please log in again' });
+      return;
+    }
 
-  const product = await productModel.findById(req.params.id);
-  if (!product) {
-    res.status(404).json({ message: 'Product not found' });
-    return;
-  }
+    const product = await productModel.findById(req.params.id);
+    if (!product) {
+      res.status(404).json({ message: 'Product not found' });
+      return;
+    }
 
-  try {
-    await user.addCart(req.params.id);
-    await user.save();
-    console.log("product added: ", product)
-    res.status(201).json({ message: 'Product added to wishlist successfully' });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-}));
+    try {
+      await user.addCart(req.params.id);
+      await user.save();
+      console.log("product added: ", product)
+      res.status(201).json({ message: 'Product added to wishlist successfully' });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  }));
 
 
-//Deleting a product to the wishlist
+//Deleting a product of the Cart
 
-router.put('/deletecart/:id', 
-  protect, 
+router.put('/deletecart/:id',
+  protect,
   doubleCsrfProtection,
   csrfErrorHandler,
   asyncHandler(async (req, res) => {
-  const user = await userModel.findById(req.user._id);
-  if (!user) {
-    res.status(404).json({ message: 'User not found, please log in again' });
-    return;
-  }
+    const user = await userModel.findById(req.user._id);
+    if (!user) {
+      res.status(404).json({ message: 'User not found, please log in again' });
+      return;
+    }
 
-  const product = await productModel.findById(req.params.id);
-  if (!product) {
-    res.status(404).json({ message: 'Product not found' });
-    return;
-  }
+    const product = await productModel.findById(req.params.id);
+    if (!product) {
+      res.status(404).json({ message: 'Product not found' });
+      return;
+    }
 
-  try {
-    await user.deleteCart(req.params.id);
-    await user.save();
-    res.status(201).json({ message: 'Product deleted of the wishlist successfully' });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-}));
+    try {
+      await user.deleteCart(req.params.id);
+      await user.save();
+      res.status(201).json({ message: 'Product deleted of the wishlist successfully' });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  }));
 
 module.exports = router;

@@ -74,7 +74,6 @@ router.get('/collections', asyncHandler(async (req, res) => {
   // category filter ******
   if (category) {
     const categoryArray = category.split(',');
-    console.log(categoryArray);
     pipeline.push({ $match: { type: { $in: categoryArray } } });
   }
 
@@ -187,8 +186,6 @@ router.get('/collections', asyncHandler(async (req, res) => {
     pipeline.push({ $limit: 10 });
   }
 
-  console.log(pipeline);
-
   try {
     const products = await productModel.aggregate(pipeline).exec();
     //Se o Objeto não for definido, ele irá retornar todos os
@@ -225,7 +222,6 @@ router.get('/group', asyncHandler(async (req, res) => {
   // category filter ******
   if (category) {
     const categoryArray = category.split(',');
-    console.log(categoryArray);
     pipeline.push(
       { $match: { impulse: true } },
       { $match: { type: { $in: categoryArray } } },
@@ -240,8 +236,6 @@ router.get('/group', asyncHandler(async (req, res) => {
       { $sample: { size: limitNum } },
     );
   };
-
-  console.log(pipeline);
 
   try {
     const products = await productModel.aggregate(pipeline).exec();

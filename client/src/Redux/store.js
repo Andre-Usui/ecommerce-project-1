@@ -18,6 +18,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
+  whitelist: [userDataSlice.reducerPath]
 }
 
 const rootReducer = combineReducers({
@@ -34,7 +35,7 @@ export const store = configureStore(
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: {
-          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PURGE, PERSIST, REGISTER],
         },
       }),
   }

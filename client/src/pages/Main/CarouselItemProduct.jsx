@@ -19,18 +19,16 @@ export default function CarouselItemImgProduct({ position, text, textSmall }) {
 
 
   useEffect(() => {
-    console.log('useEffect was called')
     dispatch(productsCarouselAction());
   }, [dispatch]);
 
   const loadingHandler = async () => {
-    console.log("link was clicked");
     dispatch(productsActions.loadingCarousel());
   }
 
   return (
     <>
-      {loadingCarousel ? <h1>Loading</h1> :
+      {loadingCarousel==='true' ? <h1>Loading</h1> :
         <a onClick={loadingHandler} href={`${CLIENT_URL}/detail/${productsCarousel[position]._id}`}>
           <div className={wrapper}>
 

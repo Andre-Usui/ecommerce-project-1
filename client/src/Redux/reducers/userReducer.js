@@ -1,4 +1,7 @@
 import { createSlice, createAction } from '@reduxjs/toolkit';
+import {userLogoutAction} from '../actions/userAction';
+import { PURGE } from "redux-persist";
+import { persistor } from '../store';
 
 
 export const userDataSlice = createSlice({
@@ -44,9 +47,24 @@ export const userDataSlice = createSlice({
       state.messageUser = `Something is wrong:`;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, (initialState) => {
+        return initialState;
+    });
+}
+
 
 });
 /*
+
+  extraReducers: (builder) => {
+    builder.addCase(PURGE, (state) => {
+      state.userData = null;
+      state.loadingUser = 'idle';
+      state.userIsLogged = 'false'
+      return 
+    })
+  }
 import { PURGE } from "redux-persist";
 
 export const logout = createAction('logout');extraReducers: (builder) =>{
