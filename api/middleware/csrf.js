@@ -14,7 +14,7 @@ module.exports = {
   cookieOptions: {
     sameSite: 'lax',
     secure: true,
-    //secure: false,
+    //secure: false, // for development
     maxAge: 1000 * 60 * 60 * 24
   }
 });
