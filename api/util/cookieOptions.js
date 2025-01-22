@@ -1,8 +1,8 @@
 const COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: true ,
-  //secure: false,  // for development
-  sameSite: 'lax',
+  //secure: true ,
+  secure: false,  // for development
+  sameSite: 'strict',
   maxAge: 1000 * 60 * 60 * 24, // 1 day in milliseconds
 };
 
