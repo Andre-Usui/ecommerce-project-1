@@ -15,7 +15,8 @@ const {
 const csrfErrorHandler = (error, req, res, next) => {
   if (error == invalidCsrfTokenError) {
     res.status(403).json({
-      ...error
+      ...error,
+      message: 'error at csrf Handler'
     });
   } else {
     next();

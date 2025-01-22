@@ -4,17 +4,15 @@ import { BASE_URL } from "../constants/BASE_URL";
 import { userActions } from "../reducers/userReducer"
 import { csrfHandler } from "../csrfHandler";
 import { persistor } from '../store';
-import { PURGE } from "redux-persist";
 
 
 
 export const userLoginAction = ({ email, password }) => {
 
   return async (dispatch) => {
-    //const csrfString = JSON.stringify(csrfToken)
+    
     try {
-
-      const csrf = await csrfHandler()
+      const csrf = await csrfHandler();
 
       const { data } = await axios.post(
         `${BASE_URL}/api/users/login`,
@@ -47,7 +45,7 @@ export const userGetAction = () => {
     try {
       const csrf = await csrfHandler()
 
-     
+
 
 
       const { data } = await axios.get(`${BASE_URL}/api/users/profile`, {
@@ -59,7 +57,7 @@ export const userGetAction = () => {
           "X-XSRF-TOKEN": csrf
         }
       });
-    
+
       dispatch(
         userActions.renderUserGet({
           userData: data || {}
