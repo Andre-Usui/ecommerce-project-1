@@ -21,7 +21,7 @@
         },
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://lojinhalivre.vercel.app"
+          "value": "https://lojinhalivre.com"
         },
         {
           "key": "Access-Control-Allow-Methods",
