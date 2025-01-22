@@ -16,7 +16,5 @@ module.exports = {
     secure: true,
     //secure: false, // for development
     maxAge: 1000 * 60 * 60 * 24,
-    domain: "https://lojinhalivre.com" 
-    //domain: undefined // for development
   }
 });
