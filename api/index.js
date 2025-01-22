@@ -31,7 +31,7 @@ mongoose.connect(process.env.MONGODB_CONNECT)
 
 const corsOptions = {
   // Frontend domain
-  origin: 'https://lojinhalivre.vercel.app', 
+  origin: 'https://lojinhalivre.com', 
   //origin: 'http://localhost:5173', // for development
   
   // Allow cookies to be sent

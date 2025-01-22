@@ -13,8 +13,8 @@ module.exports = {
   cookieName: "csrfToken",
   cookieOptions: {
     sameSite: 'strict',
-    //secure: true,
-    secure: false, // for development
+    secure: true,
+    //secure: false, // for development
     maxAge: 1000 * 60 * 60 * 24
   }
 });

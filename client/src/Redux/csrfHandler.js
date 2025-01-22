@@ -9,8 +9,8 @@ export const csrfHandler = async () => {
       `${BASE_URL}/api/csrf`,
       {
         withCredentials: true
-        
-        });
+
+      });
     const csrf = response.data.csrfToken;
     return csrf
   } catch (err) {
