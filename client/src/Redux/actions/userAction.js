@@ -33,6 +33,7 @@ export const userLoginAction = ({ email, password }) => {
         })
       );
     } catch (err) {
+      console.log(err)
       dispatch(
         userActions.errorAtUserLogin({
         }))
