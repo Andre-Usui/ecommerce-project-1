@@ -1,17 +1,7 @@
 import { Button } from 'flowbite-react';
-import TypeItem from './TypeItem'; 
+import TypeItem from './TypeItem';
 
 export default function TypeWrapper() {
-  /*
-  types:
-    - Eletronics
-    - Books
-    - Clothes
-    - Sports
-    - Home
-    - Other
-  
-  */
 
 
   return (
@@ -34,25 +24,31 @@ export default function TypeWrapper() {
       mx-auto 
       w-full
       justify-between">
-        <TypeItem 
-        left={true}
-        name="Eletrônicos"
+        <TypeItem
+          left={true}
+          name="Roupas"
+          mainValue="Clothes"
         />
         <TypeItem
-        name="Livros"
+          name="Roupas Masculinas"
+          mainValue="Men Clothes"
         />
         <TypeItem
-        name="Roupas"
+          name="Roupas Femininas"
+          mainValue="Women Clothes"
         />
         <TypeItem
-        name="Esportes"
+          name="Livros"
+          mainValue="Books"
         />
         <TypeItem
-        name="Casa e Lar"
+          name="Eletrônicos"
+          mainValue="Eletronics"
         />
         <TypeItem
-        right={true}
-        name="Outros"
+          right={true}
+          name="Casa e Lar"
+          mainValue="Home"
         />
       </Button.Group>
     </div>

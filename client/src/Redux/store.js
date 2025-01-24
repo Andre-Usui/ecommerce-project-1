@@ -11,19 +11,21 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { productsListSlice } from './reducers/productReducer';
-import { userDataSlice } from './reducers/userReducer';
+import productReducer from './reducers/productReducer';
+import userDataReducer, { userDataSlice } from './reducers/userReducer';
+import filterReducer, { filterSlice } from './reducers/filterReducer';
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: [userDataSlice.reducerPath]
+  whitelist: [userDataSlice.reducerPath, filterSlice.reducerPath]
 }
 
 const rootReducer = combineReducers({
-  userData: userDataSlice.reducer,
-  productsList: productsListSlice.reducer
+  userData: userDataReducer,
+  productsList: productReducer,
+  filter: filterReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

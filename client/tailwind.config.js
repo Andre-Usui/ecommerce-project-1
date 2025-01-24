@@ -11,5 +11,11 @@ export default {
     extend: {},
   },
   plugins: [flowbite.plugin()],
+  variants: {
+    extend: {
+      backgroundColor: ['checked'], // Ativando o suporte a bg quando "checked"
+      borderColor: ['checked'],     // Ativando suporte para border quando "checked"
+    },
+  }
 }
 

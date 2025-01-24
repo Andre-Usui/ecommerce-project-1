@@ -46,9 +46,6 @@ export const userGetAction = () => {
     try {
       const csrf = await csrfHandler()
 
-
-
-
       const { data } = await axios.get(`${BASE_URL}/api/users/profile`, {
         withCredentials: true,
         headers:

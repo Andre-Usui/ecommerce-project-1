@@ -2,7 +2,7 @@
 ## A project E-Commerce Schema
 
 You can see the project at 
-https://lojinhalivre.vercel.app/
+[lojinhalivre.com ](https://lojinhalivre.com/)
 
 ## Description
 
@@ -16,10 +16,31 @@ https://lojinhalivre.vercel.app/
   - User can filter a custom list of items; 
 
 
+## Release 1.0.4 Development
+  - Build Category Collection Page and Components;
+  - Build Filters Components;
+    - Category checkbox selector;
+    - Rating checkbox selector;
+    - Price with Number and double range selectors;
+  - Implement Filter Reducer logic at Redux and Redux Persist to store and manage States dinamically;
+  - Update and correct Products Controller Collection at API to send Data to Collections Component;
+  - Update TopSales Components to render products by the main Category.
+
+### To-do:
+
+- Update Users Reducer Redux Logic to not PURGE the entire stored data;
+- Build Pages, Sort By and Order Components and Logic;
+- Update Responsive styling at the Collection Components;
+- Update TopSales to a Slider Component;
+- Build Perfil, Wishlist and Cart page's.
+
+## Release 1.0.3 Development
+  - Deploy Client at Hostinger Host.
+  - Updated csrf logic for deployment.
+
 ## Release 1.0.2 Development
   - Deploy Client and API at Vercel Host.
   - Updated constants of URL for deployment.
-
 
 ## Release 1.0.1 Development
 
@@ -29,11 +50,7 @@ https://lojinhalivre.vercel.app/
   - Builded Login and Register Page's.
   - Updated Navbar component to respond dynamically when user is logged.  
 
-  ### To-do:
 
-  - Build Perfil, Wishlist and Cart page's
-  - Build Categories Products Page's
-    - Build filter Components
 
 
 ### Technologies

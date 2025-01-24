@@ -8,6 +8,7 @@ import ProductDetail from './pages/ProductDetail/ProductDetail';
 import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
 import UserSettings from './pages/UserSettings/UserSettings';
+import ProductCollection from './pages/ProductCollection/ProductCollection';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route  path='/login' element={<Login type="login"/>} />
           <Route  path='/register' element={<Login type="register"/>} />
           <Route  path='/profile' element={<UserSettings />} />
+          <Route  path='/collections' element={<ProductCollection />} />
         </Routes>
       </Router>
     </>

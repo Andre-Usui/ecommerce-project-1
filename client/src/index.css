@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input[type='checkbox']:checked {
+  @apply bg-orange-400;
+}
+
+input[type='checkbox'] {
+  @apply text-slate-950;
+}
+
+input[type='checkbox']:focus {
+  @apply ring-orange-400;
+}
+
+input[type='number']:focus {
+  @apply ring-orange-400 border-none;
+}
+
+input[type='']{
+  @apply text-slate-950;
+}
+
+p, h1, h2, h3 {
+  @apply text-slate-950;
+}

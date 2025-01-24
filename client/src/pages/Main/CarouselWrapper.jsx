@@ -1,5 +1,5 @@
 
-import { Carousel, } from "flowbite-react";
+import { Carousel } from "flowbite-react";
 import CarouselItemEntry from "./CarouselItemEntry";
 import CarouselItemImgLeft from "./CarouselItemImgLeft";
 import CarouselItemImgRight from "./CarouselItemImgRight";

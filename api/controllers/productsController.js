@@ -68,129 +68,175 @@ last cursor / lc
 // Working!!!
 
 router.get('/collections', asyncHandler(async (req, res) => {
-  let { category, price_min, price_max, review, sortBy, order, page, limit } = req.query;
+  let { mainCategory, category, price_min, price_max, review, sortBy, order, page, limit } = req.query;
   const pipeline = [];
 
-  // category filter ******
-  if (category) {
-    const categoryArray = category.split(',');
-    pipeline.push({ $match: { type: { $in: categoryArray } } });
-  }
-
-  // price filter ******
-  if (price_min || price_max) {
-    const p_min = parseFloat(price_min);
-    const p_max = parseFloat(price_max);
-    if (
-      p_min < 0 ||
-      p_min === NaN) {
-      console.log("price filter should be a positive number");
-      price_min = 0;
-    }
-    if (
-      p_max < 0 ||
-      p_max < NaN) {
-      console.log("price filter should be a positive number");
-      price_max = "Infinity";
-    }
-    const priceFilter = {};
-    price_min ? priceFilter.$gte = p_min : priceFilter.$gte = 0;
-    price_max ? priceFilter.$lte = p_max : priceFilter.$lte = Infinity;
-    pipeline.push({ $match: { price: priceFilter } });
-  };
-
-  // reviews filter ******
-  if (review) {
-    const reviewNum = parseInt(review);
-    const reviewFilter = {};
-    switch (reviewNum) {
-      case 1:
-        reviewFilter.$gte = 0;
-        reviewFilter.$lt = 1;
-        pipeline.push({ $match: { rating: reviewFilter } })
-        break;
-      case 2:
-        reviewFilter.$gte = 1;
-        reviewFilter.$lt = 2;
-        pipeline.push({ $match: { rating: reviewFilter } })
-        break;
-      case 3:
-        reviewFilter.$gte = 2;
-        reviewFilter.$lt = 3;
-        pipeline.push({ $match: { rating: reviewFilter } })
-        break;
-      case 4:
-        reviewFilter.$gte = 3;
-        reviewFilter.$lt = 4;
-        pipeline.push({ $match: { rating: reviewFilter } })
-        break;
-      case 5:
-        reviewFilter.$gte = 4;
-        reviewFilter.$lte = 5;
-        pipeline.push({ $match: { rating: reviewFilter } })
-        break;
-      default:
-        console.log('Review should be a Integer Number between 1 and 5');
-        reviewFilter.$gte = 0;
-        reviewFilter.$lte = 5;
-        pipeline.push({ $match: { rating: reviewFilter } })
-        break;
-    }
-  }
-
-  // sortBy filter ******
-  if (["price", "pop", "numSells", "recent"].includes(sortBy)) {
-    let orderNum = parseInt(order);
-    if (orderNum !== 1 && orderNum !== -1) {
-      console.log("order should be 1 or -1");
-      orderNum = 1;
-    }
-    switch (sortBy) {
-      case "price":
-        pipeline.push({ $sort: { impulse: 1, price: orderNum } })
-        break;
-      case "pop":
-        pipeline.push({ $sort: { impulse: 1, numReviews: orderNum, rating: orderNum } })
-        break;
-      case "numSells":
-        pipeline.push({ $sort: { impulse: 1, numSells: orderNum } })
-        break;
-      case "recent":
-        pipeline.push({ $sort: { impulse: 1, createdAt: orderNum } })
-        break;
-      default:
-        console.log("sortBy not recognized");
-        pipeline.push({ $sort: { impulse: 1, _id: orderNum } })
-        break;
-    }
-  }
-
-  // page filter ******
-  if (page) {
-    let pageNum = parseInt(page);
-    if (pageNum === NaN) {
-      console.log("error: page should be a Number!")
-      pageNum = 0;
-    }
-    pipeline.push({ $skip: pageNum * 10 })
-
-  }
-  if (limit) {
-    var limitNum = parseInt(limit);
-    if (limit < 1 || limit > 20 || limit === NaN) {
-      console.log("error: limit should be a Number between 1 and 20.")
-      var limitNum = 10;
-    }
-    pipeline.push({ $limit: limitNum });
+  if (mainCategory) {
+    pipeline.push({ $match: { type: { $in: [mainCategory] } } });
   } else {
-    pipeline.push({ $limit: 10 });
+
+    // category filter ******
+    if (category) {
+      const categoryArray = category.split(',');
+      pipeline.push({ $match: { type: { $in: categoryArray } } });
+    }
+
+    // price filter ******
+    if (price_min || price_max) {
+      const p_min = parseFloat(price_min);
+      const p_max = parseFloat(price_max);
+      if (
+        p_min < 0 ||
+        p_min === NaN) {
+        console.log("price filter should be a positive number");
+        price_min = 0;
+      }
+      if (
+        p_max < 0 ||
+        p_max < NaN) {
+        console.log("price filter should be a positive number");
+        price_max = Infinity;
+      }
+      const priceFilter = {};
+      price_min ? priceFilter.$gte = p_min : priceFilter.$gte = 0;
+      price_max ? priceFilter.$lte = p_max : priceFilter.$lte = Infinity;
+      pipeline.push({ $match: { price: priceFilter } });
+    };
+
+    // reviews filter ******
+    if (review) {
+      const reviewNum = parseInt(review);
+      const reviewFilter = {};
+      switch (reviewNum) {
+        case 1:
+          reviewFilter.$gte = 0;
+          reviewFilter.$lt = 1;
+          pipeline.push({ $match: { rating: reviewFilter } })
+          break;
+        case 2:
+          reviewFilter.$gte = 1;
+          reviewFilter.$lt = 2;
+          pipeline.push({ $match: { rating: reviewFilter } })
+          break;
+        case 3:
+          reviewFilter.$gte = 2;
+          reviewFilter.$lt = 3;
+          pipeline.push({ $match: { rating: reviewFilter } })
+          break;
+        case 4:
+          reviewFilter.$gte = 3;
+          reviewFilter.$lt = 4;
+          pipeline.push({ $match: { rating: reviewFilter } })
+          break;
+        case 5:
+          reviewFilter.$gte = 4;
+          reviewFilter.$lte = 5;
+          pipeline.push({ $match: { rating: reviewFilter } })
+          break;
+        default:
+          console.log('Review should be a Integer Number between 1 and 5');
+          reviewFilter.$gte = 0;
+          reviewFilter.$lte = 5;
+          pipeline.push({ $match: { rating: reviewFilter } })
+          break;
+      }
+    }
+
+    // sortBy filter ******
+    if (["price", "pop", "numSells", "recent"].includes(sortBy)) {
+      let orderNum = parseInt(order);
+      if (orderNum !== 1 && orderNum !== -1) {
+        console.log("order should be 1 or -1");
+        orderNum = 1;
+      }
+      switch (sortBy) {
+        case "price":
+          pipeline.push({ $sort: { impulse: 1, price: orderNum } })
+          break;
+        case "pop":
+          pipeline.push({ $sort: { impulse: 1, numReviews: orderNum, rating: orderNum } })
+          break;
+        case "numSells":
+          pipeline.push({ $sort: { impulse: 1, numSells: orderNum } })
+          break;
+        case "recent":
+          pipeline.push({ $sort: { impulse: 1, createdAt: orderNum } })
+          break;
+        default:
+          console.log("sortBy not recognized");
+          pipeline.push({ $sort: { impulse: 1, _id: orderNum } })
+          break;
+      }
+    }
+
   }
 
   try {
-    const products = await productModel.aggregate(pipeline).exec();
+    let main, minPrice, maxPrice;
+    if (mainCategory) {
+      main = mainCategory;
+      const priceStatsPipeline = [
+        ...pipeline,
+        {
+          $group: {
+            _id: null,
+            minPrice: { $min: '$price' },
+            maxPrice: { $max: '$price' },
+          },
+        },
+      ];
+
+      const priceStatsResult = await productModel.aggregate(priceStatsPipeline);
+      minPrice = priceStatsResult[0]?.minPrice ?? null;
+      maxPrice = priceStatsResult[0]?.maxPrice ?? null;
+    }
+
+    // count total products
+    const totalProductsPipeline = [
+      ...pipeline,
+      { $count: 'total' },
+    ];
+    const totalResult = await productModel.aggregate(totalProductsPipeline);
+    const totalDocuments = totalResult[0]?.total || 0;
+
+    // page filter ******
+    if (page) {
+      let pageNum = parseInt(page);
+      if (pageNum === NaN) {
+        console.log("error: page should be a Number!")
+        pageNum = 0;
+      }
+      pipeline.push({ $skip: pageNum * 12 })
+
+    } else {
+      pageNum = 0;
+    }
+    if (limit) {
+      var limitNum = parseInt(limit);
+      if (limit < 1 || limit > 20 || limit === NaN) {
+        console.log("error: limit should be a Number between 1 and 20.")
+        var limitNum = 10;
+      }
+      pipeline.push({ $limit: limitNum });
+    } else {
+      pipeline.push({ $limit: 12 });
+    }
+
+    const products = await productModel.aggregate(pipeline);
     //Se o Objeto não for definido, ele irá retornar todos os
     //dados registrados
-    res.status(200).json({ products });
+    let data = {
+      products: products,
+      totalPages: Math.ceil(totalDocuments / 12),
+      currentPage: pageNum + 1,
+    }
+    if (main) {
+      data.mainCategory = main;
+      data.minPrice = minPrice;
+      data.maxPrice = maxPrice;
+    }
+
+    res.status(200).json(data);
   } catch (err) {
     res.status(400).json({ error: 'Something went wrong at fetching a collection products.', err });
   }

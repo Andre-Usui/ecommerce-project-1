@@ -1,0 +1,68 @@
+input[type="range"] {
+  -webkit-appearance: none; /* Remove estilos padrão do navegador */
+  appearance: none;
+  width: 100%; /* Largura completa */
+  height: 0px; /* Altura do track */
+  background: transparent; /* Torna o track transparente, usamos pseudoelementos */
+  position: absolute;
+  z-index: 40; /* Z-index para sobrepor elementos */
+}
+
+/* Track personalizado */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 0px;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 0px;
+}
+
+/* Thumb personalizado */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Remove estilos padrão */
+  position: relative;
+  bottom: 6px;
+  height: 24px; /* Altura do thumb */
+  width: 24px; /* Largura do thumb */
+  background: #ff8904; /* Cor do thumb */
+  border-radius: 50%; /* Torna o thumb circular */
+  border: 2px solid #f8fafc; /* Borda branca para contraste */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4); /* Adiciona sombra */
+  cursor: pointer !important; /* Mostra o cursor de mão */
+  pointer-events: auto;
+  z-index: 30; /* Para que fique acima do track */
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 24px;
+  width: 24px;
+  position: relative;
+  bottom: 6px;
+  background: #ff8904;
+  border-radius: 50%;
+  border: 2px solid #f8fafc;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer !important;
+  pointer-events: auto;
+  z-index: 30; /* Para que fique acima do track */
+}
+
+/* Estilo da barra de preenchimento (track entre min e max) */
+input[type="range"]::-webkit-slider-runnable-track::before {
+  content: '';
+  position: absolute;
+  height: 0px;
+  z-index: -1;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

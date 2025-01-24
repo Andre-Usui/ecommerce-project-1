@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+import { filterActions } from './filterReducer';
 //list of all products
 
-export const productsListSlice = createSlice({
+const productsListSlice = createSlice({
   name: 'productsList',
   initialState: {
     products: [],
@@ -12,17 +12,21 @@ export const productsListSlice = createSlice({
     loading: 'true',
     loadingCarousel: 'true',
     loadingTopSales: 'true',
-    message: ''
+    loadingDetail: 'true',
+    message: '',
   },
   reducers: {
     loadingList(state) {
-      state.loading = true;
+      state.loading = 'true';
     },
     loadingCarousel(state) {
       state.loadingCarousel = 'true';
     },
     loadingTopSales(state) {
       state.loadingTopSales = 'true';
+    },
+    loadingDetail(state) {
+      state.loadingDetail = 'true';
     },
     renderProductsList(state, action) {
       state.loading = 'false';
@@ -49,16 +53,18 @@ export const productsListSlice = createSlice({
       state.productsTopSales = [];
     },
     renderProductDetail(state, action) {
-      state.loading = 'false'
+      state.loadingDetail = 'false'
       state.productDetail = action.payload.productDetail;
     },
     errorAtProductDetail(state, action) {
-      state.loading = 'false';
+      state.loadingDetail = 'false';
       state.productDetail = {};
     },
   }
+
 });
 
 
 
+export default productsListSlice.reducer;
 export const productsActions = productsListSlice.actions;

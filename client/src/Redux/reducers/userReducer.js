@@ -1,7 +1,5 @@
-import { createSlice, createAction } from '@reduxjs/toolkit';
-import {userLogoutAction} from '../actions/userAction';
+import { createSlice } from '@reduxjs/toolkit';
 import { PURGE } from "redux-persist";
-import { persistor } from '../store';
 
 
 export const userDataSlice = createSlice({
@@ -23,7 +21,7 @@ export const userDataSlice = createSlice({
       state.userIsLogged = 'true';
       state.messageUser = 'User is logged';
     },
-    errorAtUserLogin(state, action) {
+    errorAtUserLogin(state, ) {
       state.loadingUser = 'idle';
       state.messageUser = `User or Password doesnt match`;
     },
@@ -32,17 +30,17 @@ export const userDataSlice = createSlice({
       state.userData = action.payload.userData;
       state.messageUser = 'The User is fetched';
     },
-    errorAtUserGet(state, action) {
+    errorAtUserGet(state) {
       state.loadingUser = 'idle';
       state.messageUser = `Something is wrong:`;
     },
-    renderUserLogout(state, action) {
+    renderUserLogout(state) {
       state.loadingUser = 'idle';
       state.userData = null;
       state.userIsLogged = 'false';
       state.messageUser = 'The User logout';
     },
-    errorAtUserLogout(state, action) {
+    errorAtUserLogout(state) {
       state.loadingUser = 'idle';
       state.messageUser = `Something is wrong:`;
     },
@@ -55,24 +53,7 @@ export const userDataSlice = createSlice({
 
 
 });
-/*
-
-  extraReducers: (builder) => {
-    builder.addCase(PURGE, (state) => {
-      state.userData = null;
-      state.loadingUser = 'idle';
-      state.userIsLogged = 'false'
-      return 
-    })
-  }
-import { PURGE } from "redux-persist";
-
-export const logout = createAction('logout');extraReducers: (builder) =>{
-    builder.addCase(PURGE, (state) => {
-      logout.removeAll(state)
-    })
-  }
-*/
 
 
+export default userDataSlice.reducer;
 export const userActions = userDataSlice.actions;

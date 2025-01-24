@@ -5,7 +5,7 @@ import { productsListAction } from "../../Redux/actions/productAction.js";
 
 export default function ItemsList() {
   const dispatch = useDispatch();
-  const { products, loadingList, message } = useSelector((state) => state.productsList);
+  const { products, loading, message } = useSelector((state) => state.productsList);
 
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function ItemsList() {
 
   return (
     <>
-      {loadingList==='true' ? (
+      {loading==='true' ? (
         <h1>loading</h1>
       ) : (
         <section className="text-gray-600 body-font w-full lg:w-11/12 mt-3 lg:mt-6">

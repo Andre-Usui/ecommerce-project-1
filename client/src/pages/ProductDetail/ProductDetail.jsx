@@ -9,7 +9,7 @@ import { productDetailAction } from "../../Redux/actions/productAction.js";
 export default function ProductDetail() {
   let params = useParams();
   const dispatch = useDispatch();
-  const { productDetail, loading } = useSelector((state) => state.productsList);
+  const { productDetail, loadingDetail } = useSelector((state) => state.productsList);
 
   useEffect(() => {
     console.log('useEffect in product detail was called')
@@ -19,7 +19,7 @@ export default function ProductDetail() {
   return (
     <>
       <Layout>
-        {loading ? <h1>loading</h1> :
+        {loadingDetail === 'true' ? <h1>loading</h1> :
           <ProductDetailComp
             _id={productDetail._id}
             type={productDetail.type}
