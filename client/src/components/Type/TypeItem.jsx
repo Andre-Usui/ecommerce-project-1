@@ -1,6 +1,6 @@
 import { productsActions } from "../../Redux/reducers/productReducer"
 import { filterActions } from "../../Redux/reducers/filterReducer"
-import { setLocalFilter } from "../../Redux/actions/filteraction"
+import { setLocalFilter, setMultipleFilters } from "../../Redux/actions/filterAction"
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 
@@ -9,11 +9,14 @@ export default function TypeItem({ name, left, right, mainValue }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const typeHandler = async () => {
+  const typeHandler = () => {
     dispatch(productsActions.loadingList());
-    dispatch(filterActions.resetFilters())
-    dispatch(filterActions.setFilter({ name: 'mainCategory', value: mainValue }));
-    dispatch(filterActions.setCategory(mainValue));
+    dispatch(filterActions.resetFilters());
+    dispatch(setMultipleFilters([
+      { name: 'mainCategory', value: mainValue },
+      { name: 'expandFilter', value: 'false' },
+      { name: 'category', value: [mainValue] }
+    ]))
     dispatch(setLocalFilter({ mainCategory: mainValue }))
     navigate("/collections");
   }

@@ -7,7 +7,7 @@ export default function FilterCategory() {
 
   const dispatch = useDispatch();
 
-  const { categoryOptions } = useSelector((state) => state.filter);
+  const { category, categoryOptions } = useSelector((state) => state.filter);
 
   const handleCategoryChange = (e) => {
     dispatch(filterActions.setCategory(e.target.value));
@@ -16,18 +16,18 @@ export default function FilterCategory() {
 
   return (
 
-    <div className="flex w-full flex-col gap-2 px-2" id="checkbox">
+    <div className="flex w-[300px] m-4 flex-col gap-2 px-2" id="checkbox">
       <h1 className='text-lg text-center' >Categorias</h1>
-      {categoryOptions.map((category, index) => (
+      {categoryOptions.map((cat, index) => (
         <Fragment key={index}>
-          <div className="flex items-center gap-1" >
+          <div className="flex items-center gap-2" >
             <Checkbox
-              id={category}
-              checked={index === 0 ? true : undefined}
+              id={cat}
+              checked={category.includes(cat) ? true : ''}
               onChange={index === 0 ? (e) => e.preventDefault() : handleCategoryChange}
-              value={category}
+              value={cat}
             />
-            <Label className={`text-xs ${index === 0 ? 'text-md' : ''}`} htmlFor={category}>{category}</Label>
+            <Label className={`text-xs ${index === 0 ? 'text-md' : ''}`} htmlFor={cat}>{cat}</Label>
           </div>
         </Fragment>
       ))

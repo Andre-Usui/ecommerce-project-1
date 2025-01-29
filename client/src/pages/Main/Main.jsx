@@ -8,7 +8,18 @@ import TopSalesWrapper from '../../components/topSales/TopSalesWrapper';
 export default function Main() {
 
 
+/*
 
+ajustar para que TopSalesWrapper, TypeWrapper e
+ItemsList sejam enclausurados em um div que terá
+w-11/12, flex
+        flex-col
+        justify-center
+        items-center
+        content-stretch
+        gap-0
+ajustar Pastas dos componentes 
+*/
   return (
     <>
       <Layout>
@@ -26,10 +37,11 @@ export default function Main() {
         bg-orange-50 
         border-t-4
         border-t-slate-500/25
-        border-b-8 
-        border-b-orange-500
+        
         ">
-          <TopSalesWrapper />
+          <TopSalesWrapper
+            text='⚡ Nossos produtos mais Tops ! ⚡'
+          />
           <TypeWrapper />
           <ItemsList />
         </div>

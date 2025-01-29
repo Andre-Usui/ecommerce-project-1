@@ -55,7 +55,7 @@ export default function FilterReview() {
 
   return (
     <>
-      <div className="flex w-full flex-col gap-2 px-2">
+      <div className="flex w-[290px] m-4 flex-col gap-2 px-2">
         <h1 className="text-lg text-center">Preços</h1>
         <div className="relative h-8  text-sm font-medium text-gray-700 dark:text-gray-200">
           <div className="absolute h-8 flex items-center left-0">

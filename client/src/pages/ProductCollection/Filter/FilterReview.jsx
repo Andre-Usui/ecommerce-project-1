@@ -21,7 +21,7 @@ export default function FilterReview() {
 
   return (
     <>
-      <div className="flex w-full flex-col gap-2 px-2" id="checkbox">
+      <div className="flex w-[300px] flex-col m-4 gap-2 px-2" id="checkbox">
         <h1 className='text-lg text-center'>Avaliações</h1>
         <div className="flex items-center gap-1" >
           <Checkbox

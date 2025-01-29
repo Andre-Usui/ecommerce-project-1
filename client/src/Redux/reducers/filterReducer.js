@@ -35,12 +35,15 @@ export const filterSlice = createSlice({
     review: '',
     order: '',
     localFilter: '',
-    currentPage: '1',
-    totalPages: '1',
+    page: 1,
+    totalPages: 1,
+    totalDocuments: 0,
     categoryOptions: [],
     priceMinDefault: '',
     priceMaxDefault: '',
-
+    expandFilter: 'false',
+    expandSort: 'false',
+    sortName: 'Relevância'
   },
   reducers: {
     setFilter(state, action) {
@@ -61,28 +64,22 @@ export const filterSlice = createSlice({
         state.category = newArray;
       }
     },
-
-    removeCategory(state, action) {
-      const categoryToRemove = action.payload;
-      console.log(categoryToRemove)
-      const categories = state.category.filter(
-        (cat) => cat !== categoryToRemove
-      );
-      state.category = categories;
-    },
-
+    
     resetFilters(state) {
       state.category = [];
       state.priceMin = '';
       state.priceMax = '';
       state.sortBy = '';
+      state.sortName= 'Relevância';
       state.review = '';
       state.order = '';
+      state.expandFilter = 'false';
+      state.expandSort = 'false';
     },
 
     setPages(state, action) {
-      state.currentPage = action.payload.currentPage;
-      state.totalPages = action.payload.totalPages;
+      state.page = action.payload.page;
+      state.totalPages = action.payload.totalPages || state.totalPages;
     },
 
     setCategoryOptions(state, action) {

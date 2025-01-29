@@ -2,7 +2,7 @@ import { filterActions } from '../reducers/filterReducer'
 
 export function setLocalFilter(filters) {
 
-  return async (dispatch) => {
+  return (dispatch) => {
     try {
       const query = new URLSearchParams(
         Object.fromEntries(
@@ -21,6 +21,28 @@ export function setLocalFilter(filters) {
         value: ''
       })
       )
+    };
+  };
+};
+
+export function setMultipleFilters(filters) {
+
+  return (dispatch) => {
+    try {
+      console.log(filters)
+      filters.map(async (filter) => (
+        await dispatch(filterActions.setFilter({
+          name: filter.name,
+          value: filter.value
+        }))
+
+      ))
+
+      
+    } catch (err) {
+      console.log(err)
+      
+      
     };
   };
 };

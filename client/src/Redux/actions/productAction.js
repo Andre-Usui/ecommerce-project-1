@@ -82,15 +82,20 @@ export const productsCollectionAction = (query) => {
 
   return async (dispatch) => {
     try {
-
+      
       const response = await axios.get(`${BASE_URL}/api/products/collections?${query}`);
 
       dispatch(filterActions.setPages({
-        currentPage: response.data.currentPage || '',
-        totalPages: response.data.totalPages || ''
+        page: response.data.page || 1,
+        totalPages: response.data.totalPages || 1
+      }));
+      dispatch(filterActions.setFilter({
+        name: 'totalDocuments',
+        value: response.data.totalDocuments
       }));
 
       if (response.data.mainCategory) {
+        console.log('main category was called in action')
         dispatch(filterActions.setCategoryOptions({
           categoryOptions: response.data.mainCategory
         }));

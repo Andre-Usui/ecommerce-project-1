@@ -78,7 +78,7 @@ export default function CarouselWrapper() {
       </Carousel>
       <a href="" className={wrapperItem}>
         <div className={innerWrapperItem}>
-          <h1>Saiba todas funcionalidades do <br />
+          <h1 className="text-slate-50">Saiba todas funcionalidades do <br />
             <span className="text-base md:text-xl lg:text-3xl"> Lojinha Livre</span>
             <br />clicando aqui!
           </h1>
@@ -87,7 +87,7 @@ export default function CarouselWrapper() {
 
       <a href="" className={wrapperItem}>
         <div className={innerWrapperItem}>
-          <h1>Registre-se e comece agora mesmo a comprar e vender!</h1>
+          <h1 className="text-slate-50" >Registre-se e comece agora mesmo a comprar e vender!</h1>
         </div>
       </a>
     </div >

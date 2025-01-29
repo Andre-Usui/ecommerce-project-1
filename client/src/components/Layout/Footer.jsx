@@ -3,7 +3,9 @@ export default function Footer() {
   const year = new Date().getFullYear();
   
   return (
-    <footer className="bg-white rounded-lg shadow-lg shadow-black/70 dark:bg-gray-900 m-4">
+    <div className="bg-orange-50 p-4 h-full">
+
+    <footer className="bg-white rounded-lg shadow-lg shadow-black/70 dark:bg-gray-900">
       <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8 ">
         <hr className="my-2 border-gray-200 sm:mx-auto dark:border-gray-700 lg:mt-0 lg:mb-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
@@ -63,5 +65,6 @@ export default function Footer() {
         </span>
       </div>
     </footer>
+    </div>
   )
 }

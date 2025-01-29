@@ -16,6 +16,26 @@ You can see the project at
   - User can filter a custom list of items; 
 
 
+## Release 1.0.5 Development
+- Build SortBy Component and Logic;
+  - Builded a Custom Selector Component to allow a  wider CSS customization;
+- Build Pagenation Component and Logic;
+- Rearrange Responsive's configuration at ProductCollection's Page;
+  - Builded a hidden Button for expand and translate Filter Component at lower screen sizes;
+  - Rearrange Grid and Sizes for Collection List, SortBy and Top Sales component;
+- Fixes bugs at Product Collection Controller;
+  - Update some minors Agreggate errors;
+  - Rearrange the response.data constructor for a better performance.
+  
+
+  ### To-do:
+
+- Update Users Reducer Redux Logic to not PURGE the entire stored data;
+- Update TopSales to a Slider Component;
+- Build Loading Component;
+- Build Perfil Page;
+
+
 ## Release 1.0.4 Development
   - Build Category Collection Page and Components;
   - Build Filters Components;
@@ -25,14 +45,6 @@ You can see the project at
   - Implement Filter Reducer logic at Redux and Redux Persist to store and manage States dinamically;
   - Update and correct Products Controller Collection at API to send Data to Collections Component;
   - Update TopSales Components to render products by the main Category.
-
-### To-do:
-
-- Update Users Reducer Redux Logic to not PURGE the entire stored data;
-- Build Pages, Sort By and Order Components and Logic;
-- Update Responsive styling at the Collection Components;
-- Update TopSales to a Slider Component;
-- Build Perfil, Wishlist and Cart page's.
 
 ## Release 1.0.3 Development
   - Deploy Client at Hostinger Host.
@@ -49,8 +61,6 @@ You can see the project at
   - Implemented Redux Persist to handle Users Data.
   - Builded Login and Register Page's.
   - Updated Navbar component to respond dynamically when user is logged.  
-
-
 
 
 ### Technologies
@@ -81,14 +91,9 @@ You can see the project at
 
 
 ## To-Do : Client
-
-  - Build Main ProductList Page; (Partial)
-    - Set Products limit per Page; 
-    - Set Pages;
-    - Set Filters;
-
-  - Build Product Detail Page;
+  - Build Wishlist Page;
   - Build Cart Page;
+  - Enhance Product Detail Page;
   - Build Payment Page;
     - Implement Payment Logic;
   - Build User Page;
@@ -99,6 +104,9 @@ You can see the project at
     - Edit Product to sell;
     - Delete Product to sell;
   - Build Contact-me Page;
+  - Build Register Page Logic;
+  - Build 404 page;
+
 
 ## To-Do : Server 
 
@@ -106,7 +114,8 @@ You can see the project at
     - Add review;
     - Edit review;
     - Delete review;
-  - Build review Controller 
+  - Build review Controller;
+  - Build error Handlers and messages;
 
 
 ### Steps Done:
@@ -149,5 +158,31 @@ You can see the project at
   - Comments;
   - User_id Comment; 
   - Product_id Comment;
+  - Implemented security logic for handling jwt and csrf tokens, using cookies instead of headers in Request. Now the app is protected from CSRF atacks and there is more security since the Cookie doesnt handle JavaScript logic as Headers. 
+    - Used `cookie-parser` and `csrf-csrf`.
+  - Implemented Redux Persist to handle Users Data.
+  - Builded Login and Register Page's.
+  - Updated Navbar component to respond dynamically when user is logged.  
+  - Deploy Client and API at Vercel Host.
+  - Updated constants of URL for deployment.
+  - Build Category Collection Page and Components;
+  - Build Filters Components;
+    - Category checkbox selector;
+    - Rating checkbox selector;
+    - Price with Number and double range selectors;
+  - Implement Filter Reducer logic at Redux and Redux Persist to store and manage States dinamically;
+  - Update and correct Products Controller Collection at API to send Data to Collections Component;
+  - Update TopSales Components to render products by the main Category.
+  - Build SortBy Component and Logic;
+    - Builded a Custom Selector Component to allow a  wider CSS customization;
+  - Build Pagenation Component and Logic;
+  - Rearrange Responsive's configuration at ProductCollection's Page;
+    - Builded a hidden Button for expand and translate Filter Component at lower screen sizes;
+    - Rearrange Grid and Sizes for Collection List, SortBy and Top Sales component;
+  - Fixes bugs at Product Collection Controller;
+    - Update some minors Agreggate errors;
+    - Rearrange the response.data constructor for a better performance;
+
+
 
 
